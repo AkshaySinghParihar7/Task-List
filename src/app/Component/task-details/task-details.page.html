@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button mode="ios" color="medium" text="Back"></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button mode="ios" color="success">Ticket - {{cardDetails.ticketId}}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+</ion-header>
+<ion-content>
+  <div class="ion-padding">
+    <div>
+      <ion-label>{{cardDetails.title}} - {{cardDetails.ticketId}}</ion-label>
+    </div>
+    <div>
+      <ion-chip
+        [color]="cardDetails.priority === 'High' ? 'danger' : (cardDetails.priority === 'Low' ? 'success' : 'warning')">
+        <ion-icon name="ellipse-outline"></ion-icon>
+        &nbsp;&nbsp;{{cardDetails.priority}}&nbsp;&nbsp;
+      </ion-chip>
+      <ion-chip color="medium"><ion-icon
+          name="time-outline"></ion-icon>&nbsp;&nbsp;{{cardDetails.dueDate}}&nbsp;&nbsp;</ion-chip>
+    </div>
+  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Description</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{cardDetails.description}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Comments</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="comment-section" *ngFor="let commentData of cardDetails.comments">
+        <h2><b>{{commentData.commentBy}}</b></h2>
+        <p>{{commentData.comment}}</p>
+        <p class="timeDisplay">{{commentData.timeAgo}}</p>
+        <br/>
+      </div>
+      <br/>
+      <hr/>
+      <div class="addComment-section">
+        <ion-list>
+          <ion-item lines="none">
+            <div class="flex-container">
+              <ion-textarea label="Write comment..." labelPlacement="floating" placeholder="Add Comments" [(ngModel)]="newComment"></ion-textarea>
+              <ion-button color="secondary" (click)="onAddComment()">Add</ion-button>
+            </div>
+          </ion-item>
+        </ion-list>
+      </div>      
+    </ion-card-content>
+  </ion-card>
+</ion-content>

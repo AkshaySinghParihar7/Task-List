@@ -1,0 +1,45 @@
+.ion-padding {
+    text-align: center;
+
+    ion-label {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+ion-content {
+    ion-chip {
+        margin-top: 20px;
+    }
+}
+
+ion-card {
+    ion-card-header {
+        ion-card-title {
+            font-size: 15px;
+        }
+    }
+}
+
+.comment-section {
+    .timeDisplay {
+        float: right;
+    }
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    background-color: #ededed;
+    padding: 20px;
+    border-radius: 10px;
+    /* Align items vertically */
+}
+
+.flex-container ion-textarea {
+    flex: 1;
+    /* Expand and fill available space */
+    margin-right: 10px;
+    /* Add some spacing between textarea and button */
+}

@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Todo List</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="auto"><ion-label>Tasks List</ion-label></ion-col>
+      <ion-col></ion-col>
+      <ion-col><ion-select label="Priority" value="All" placeholder="All" label-placement="stacked"
+          (ionChange)="onPriorityChange($event)">
+          <ion-select-option value="All">All</ion-select-option>
+          <ion-select-option value="High">High</ion-select-option>
+          <ion-select-option value="Medium">Medium</ion-select-option>
+          <ion-select-option value="Low">Low</ion-select-option>
+        </ion-select></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <p class="count-title">Total task count: {{objCount}}</p>
+  <ion-card *ngFor="let item of workDataClon" (click)="viewCardDetails(item)">
+    <div class="priority"><span class="{{item.priority}}">{{item.priority}}</span></div>
+    <ion-card-header>
+      <ion-card-title>
+        <span class="title-text">{{item.title.length > 35 ? item.title.substring(0, 35) + '...' : item.title}}</span>
+        <!-- <span *ngIf="item.title.length > 20" class="see-all">See All</span> -->
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{item.description.length > 50 ? item.description.substring(0, 50) + '... see all' : item.description}}
+      <ion-list>
+        <ion-item lines="none">
+          <ion-button slot="end" color="success" fill="clear">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Edit</span>
+          </ion-button>
+          <ion-button slot="end" color="danger" fill="clear" (click)="showDeleteAlert(item)">
+            <ion-icon name="trash-outline"></ion-icon>
+            <span>Delete</span>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" id="open-modal" expand="block">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Add Task</ion-title>
+          <!-- <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Save</ion-button>
+          </ion-buttons> -->
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Title <span class="danger">*</span></ion-label>
+          <ion-input type="text" placeholder="Add title" [(ngModel)]="name" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Description <span class="danger">*</span></ion-label>
+          <ion-input type="text" placeholder="Add description" [(ngModel)]="description" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Select Priority</ion-label>
+          <ion-select [(ngModel)]="priority" required>
+            <ion-select-option value="High">High</ion-select-option>
+            <ion-select-option value="Medium">Medium</ion-select-option>
+            <ion-select-option value="Low">Low</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <br />
+        <ion-button expand="full" type="button" fill="clear" (click)="onAddTask()">Submit</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-toast [isOpen]="isToastOpen" message="{{toastMsg}}" [duration]="3000" (didDismiss)="setOpen(false)"
+    class="custom-toast"></ion-toast>
+</ion-content>
